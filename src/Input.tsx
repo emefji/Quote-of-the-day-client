@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import InputDisplay from './InputDisplay'
 
 export default function Input() {
 
@@ -6,7 +7,8 @@ export default function Input() {
 
     return (
         <div>
-            <p>{inputText}</p>
+            {/* <InputDisplay >{inputText}</InputDisplay> */}
+            <InputDisplay inputText={inputText} />
             <input placeholder="ihihihiihiih" value={inputText} onChange={(event) => setInputText(event.target.value)} />
         </div>
     )

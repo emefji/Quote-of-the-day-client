@@ -1,0 +1,27 @@
+.quote {
+    color: red;
+}
+
+.interact_container {
+
+}
+
+.heart_icon {
+    width: 25px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.heart_icon:hover {
+    filter: brightness(0.9);
+}
+
+.heart_icon:active {
+    filter: brightness(0.7);
+}
+
+.comment_icon {
+    width: 25px;
+    margin-left: 20px;
+    cursor: pointer;
+}
