@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import moment from "moment"
 import http from '../functions/httprequests';
 import Quote from './Quote'
 
-export default function List() {
+export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
 
     //const documents: Array<IQuote> = []
+    const [quotes, setQuotes] = useState<IQuote[]>([])
 
     useEffect(() => {
         async function getQuotes() {
@@ -13,6 +15,7 @@ export default function List() {
                 method: "GET",
             })
 
+            setQuotes(result.quotes)
             console.log(result)
         }
         
@@ -25,7 +28,22 @@ export default function List() {
 
     return (
         <div>
-            <Quote 
+            {
+                quotes.map((currentQuote) => <Quote 
+                    key={currentQuote._id}
+                    fingerprint={props.fingerprint}
+                    quoteDocument={{
+                        _id: currentQuote._id,
+                        author: currentQuote.author,
+                        quote: currentQuote.quote,
+                        comments: currentQuote.comments,
+                        likes: currentQuote.likes,
+                        createdAt: moment(currentQuote.createdAt).toDate(),
+                        updatedAt: moment(currentQuote.updatedAt).toDate()
+                    }}
+                />)
+            }
+           {/*  {<Quote 
                 quoteDocument={{
                     _id: "",
                     author: "Göran svensson",
@@ -35,7 +53,11 @@ export default function List() {
                     createdAt: new Date(),
                     updatedAt: new Date()
                 }}
-            />
+            />} */}
         </div>
     )
+}
+
+interface DettaBehöverInteHeta_PropsForComponent {
+    fingerprint: string
 }
