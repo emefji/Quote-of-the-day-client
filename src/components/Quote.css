@@ -36,3 +36,47 @@
     display: flex;
     justify-content: center;
 }
+
+.deleteButton {
+    width: 80px;
+    height: 45px;
+    border: solid;
+    color: white;
+    background-color: red;
+    border-radius: 4px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 10px;
+    border-color: black;
+}
+
+.updateButton {
+    width: 80px;
+    height: 45px;
+    border: solid;
+    color: white;
+    background-color: rgb(25, 187, 46);
+    border-radius: 4px;
+    margin: 10px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-color: black;
+}
+
+.updateButton:hover {
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    cursor: pointer;
+}
+
+.commentText {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-right: 0.5rem;
+    font-style: italic;
+}
+
+.commentContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

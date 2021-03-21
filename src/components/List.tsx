@@ -24,6 +24,25 @@ export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
         setQuotes(JSON.parse(JSON.stringify(quotes)))        
     }
 
+    function createCommentLocally(id: string, author: string, comment: string) {
+        // Hitta rätt quotedocument
+        const match = quotes.find((currentQuote) => currentQuote._id === id)
+        if (!match) {
+            console.log("Vi kunde inte hitta commenten")
+            return
+        }
+
+        match.comments.push({
+            _id: (Math.random() * 100000).toString(),
+            author: author,
+            comment: comment,
+            createdAt: moment().toDate(),
+            updatedAt: moment().toDate()
+        })
+
+        setQuotes(JSON.parse(JSON.stringify(quotes)))     
+    }
+
     useEffect(() => {
         async function getQuotes() {
             const result = await http({
@@ -47,6 +66,7 @@ export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
             {
                 quotes.map((currentQuote) => <Quote 
                     key={currentQuote._id}
+                    createCommentLocally={createCommentLocally}
                     locallyChangeQuote={likeLocally}
                     fingerprint={props.fingerprint}
                     quoteDocument={{

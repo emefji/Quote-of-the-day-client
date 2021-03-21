@@ -1,6 +1,6 @@
 interface IComment {
     _id: string,
-    comemnt: string,
+    comment: string,
     author: string,
     createdAt: Date,
     updatedAt: Date

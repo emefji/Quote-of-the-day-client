@@ -4,6 +4,7 @@ import { useState } from 'react'
 import heart from "../assets/heart.svg"
 import message from "../assets/message.svg"
 import http from '../functions/httprequests'
+import CreateComments from './CreateComments'
 
 import "./Quote.css"
 
@@ -61,7 +62,16 @@ export default function Quote(props: PropsForComponent) {
             <button className="deleteButton">Delete</button>
             {commentsActive ? 
                 <div className="comments">
-                    <p>COMMENT</p>
+                    {
+                        
+                        props.quoteDocument.comments.map((comment) => 
+                            <div key={comment._id} className="commentContainer">
+                                <p className="commentText"> "{comment.comment}"</p>
+                                <p className="commentAText"> {comment.author}</p>
+                            </div>
+                        )
+                    }
+                    <CreateComments id={props.quoteDocument._id} createCommentLocally={props.createCommentLocally} />
                 </div>
                 : null
             }
@@ -70,6 +80,7 @@ export default function Quote(props: PropsForComponent) {
 }
 
 interface PropsForComponent {
+    createCommentLocally: (id: string, author: string, comment: string) => void
     locallyChangeQuote: (id: string) => void,
     quoteDocument: IQuote,
     fingerprint: string
