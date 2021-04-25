@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import moment from "moment"
 import http from '../functions/httprequests';
 import Quote from './Quote'
@@ -43,6 +43,21 @@ export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
         setQuotes(JSON.parse(JSON.stringify(quotes)))     
     }
 
+    function deleteQuoteLocally(id: string) {
+        // Hitta rätt quotedocument
+        const matchIndex = quotes.findIndex((currentQuote) => currentQuote._id === id)
+        if (matchIndex < 0) {
+            console.log("Vi kunde inte hitta quoten")
+            return
+        }
+
+        else {
+            quotes.splice(matchIndex, 1)
+            const newQuotes = JSON.parse(JSON.stringify(quotes))
+            setQuotes(newQuotes);
+        }
+    }
+
     useEffect(() => {
         async function getQuotes() {
             const result = await http({
@@ -68,6 +83,7 @@ export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
                     key={currentQuote._id}
                     createCommentLocally={createCommentLocally}
                     locallyChangeQuote={likeLocally}
+                    deleteQuoteLocally={deleteQuoteLocally}
                     fingerprint={props.fingerprint}
                     quoteDocument={{
                         _id: currentQuote._id,

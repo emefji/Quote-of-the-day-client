@@ -35,8 +35,8 @@ export default function CreateComments(props: PropsForComponent) {
 
     return (
         <div>
-            <input placeholder="Author" value={author} onChange={(event) => setAuthor(event.target.value)} />
             <input placeholder="Comment" value={comment} onChange={(event) => setComment(event.target.value)} />
+            <input placeholder="Author" value={author} onChange={(event) => setAuthor(event.target.value)} />
             <button onClick={publishComment}>Submit</button>
         </div>
     )

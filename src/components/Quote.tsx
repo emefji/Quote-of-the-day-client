@@ -46,6 +46,27 @@ export default function Quote(props: PropsForComponent) {
         setCommentsActive(!commentsActive)
     }
 
+    async function deleteQuote() {
+        // eslint-disable-next-line no-restricted-globals
+        let confirmed = confirm("Vill du verkligen ta bort denna quote")
+
+        if (confirmed) {
+            await http({
+                url: "/quote",
+                method: "DELETE",
+                data: {
+                    id: props.quoteDocument._id
+                }
+            })
+            props.deleteQuoteLocally(props.quoteDocument._id)
+        }
+
+        else {
+            return;
+        }
+
+    }
+
     return (
         <div className="all">
             <div className="interact_container">
@@ -53,18 +74,17 @@ export default function Quote(props: PropsForComponent) {
                     <img onClick={like} className="heart_icon" src={isLiked ? heart : heart} alt="" />
                     <p>{props.quoteDocument.likes.length}</p>
                 </div>
-                <img onClick={comment} className="comment_icon" src={message} alt="" /> 
+                <img onClick={comment} className="comment_icon" src={message} alt="" />
             </div>
             <p className="quote">"{props.quoteDocument.quote}"</p>
             <p className="author">{props.quoteDocument.author}</p>
             <p className="createdAt">{moment(props.quoteDocument.createdAt).format("YY/MM/DD HH:mm")}</p>
-            <button className="updateButton">Update</button>
-            <button className="deleteButton">Delete</button>
-            {commentsActive ? 
+            <button className="deleteButton" onClick={deleteQuote}>Delete</button>
+            {commentsActive ?
                 <div className="comments">
                     {
-                        
-                        props.quoteDocument.comments.map((comment) => 
+
+                        props.quoteDocument.comments.map((comment) =>
                             <div key={comment._id} className="commentContainer">
                                 <p className="commentText"> "{comment.comment}"</p>
                                 <p className="commentAText"> {comment.author}</p>
@@ -83,7 +103,8 @@ interface PropsForComponent {
     createCommentLocally: (id: string, author: string, comment: string) => void
     locallyChangeQuote: (id: string) => void,
     quoteDocument: IQuote,
-    fingerprint: string
+    fingerprint: string,
+    deleteQuoteLocally: (id: string) => void
 }
 
 /**
@@ -94,4 +115,4 @@ likes []
 comments []
 updatedAt Date
 createdAt Date
- */
+ */ 
