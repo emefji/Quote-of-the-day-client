@@ -27,7 +27,6 @@ function App() {
 			
 		}
 	}, [])
-
   	return (
     	<div className="App">
 			<Title Title={"Quote of the day"} />

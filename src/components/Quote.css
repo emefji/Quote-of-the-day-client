@@ -28,11 +28,16 @@
 
 .comment_icon {
     width: 25px;
-    margin-left: 20px;
     cursor: pointer;
+    margin-right: 20px;
 }
 
 .likes_container {
+    display: flex;
+    justify-content: center;
+}
+
+.comment-container {
     display: flex;
     justify-content: center;
 }

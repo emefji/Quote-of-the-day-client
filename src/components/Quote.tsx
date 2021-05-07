@@ -74,7 +74,10 @@ export default function Quote(props: PropsForComponent) {
                     <img onClick={like} className="heart_icon" src={isLiked ? heart : heart} alt="" />
                     <p>{props.quoteDocument.likes.length}</p>
                 </div>
-                <img onClick={comment} className="comment_icon" src={message} alt="" />
+                <div className="comment-container">
+                    <img onClick={comment} className="comment_icon" src={message} alt="" />
+                    <p>{props.quoteDocument.comments.length}</p>
+                </div>
             </div>
             <p className="quote">"{props.quoteDocument.quote}"</p>
             <p className="author">{props.quoteDocument.author}</p>

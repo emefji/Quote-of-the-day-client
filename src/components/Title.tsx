@@ -4,6 +4,7 @@ export default function Title(props: PropsForComponent) {
     return (
         <div>
             <h1>{props.Title}</h1>
+
         </div>
     )
 }

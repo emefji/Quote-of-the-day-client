@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import moment from "moment"
 import http from '../functions/httprequests';
 import Quote from './Quote'
+import NewQuote from "./NewQuote"
 
 export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
 
@@ -58,6 +59,20 @@ export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
         }
     }
 
+    function createQuoteLocally(id: string, createdAt: Date, updatedAt: Date, author: string, quote: string) {
+        quotes.push({
+            _id: id,
+            author: author,
+            quote: quote,
+            comments: [],
+            likes: [],
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        })
+
+        setQuotes(JSON.parse(JSON.stringify(quotes)))   
+    }
+
     useEffect(() => {
         async function getQuotes() {
             const result = await http({
@@ -68,7 +83,7 @@ export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
             setQuotes(result.quotes)
             console.log(result)
         }
-        
+
         getQuotes();
 
     }, [])
@@ -78,6 +93,9 @@ export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
 
     return (
         <div>
+
+
+            <NewQuote updateLocally={createQuoteLocally} />
             {
                 quotes.map((currentQuote) => <Quote 
                     key={currentQuote._id}
