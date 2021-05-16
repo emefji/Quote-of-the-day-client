@@ -1,0 +1,31 @@
+.home-btn {
+    width: 100px;
+    padding: 5px;
+    height: 50px;
+    border: solid;
+    color: white;
+    background-color: rgb(34, 158, 12);
+    border-radius: 4px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 10px;
+    border-color: black;
+}
+
+.commentContainer {
+    border-color:  #d9d9d9;
+    background-color: #f2f2f2;
+    border-width: 3px;
+    border-style: solid;
+    padding: 5px;
+    margin: 15px;
+}
+
+.commentAText {
+    color: green;
+    padding: 5px;
+}
+
+.all-the-sutff-for-create-comments-yes {
+    justify-content: center;
+    display: flex;
+}

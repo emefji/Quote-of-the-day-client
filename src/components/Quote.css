@@ -10,6 +10,10 @@
     border-color:  #d9d9d9;
     border-width: 3px;
     border-style: solid;
+
+    width: 550px;
+    margin: 10px;
+    border-radius: 10px;
 }
 
 .heart_icon {
@@ -59,18 +63,14 @@
     height: 45px;
     border: solid;
     color: white;
-    background-color: rgb(25, 187, 46);
+    background-color: rgb(187, 25, 25);
     border-radius: 4px;
     margin: 10px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     border-color: black;
 }
 
-.updateButton:hover {
-    cursor: pointer;
-}
-
-.deleteButton:hover {
+button:hover {
     cursor: pointer;
 }
 
@@ -84,4 +84,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+input {
+    padding: 10px;
+    height: 20px;
+    margin: 5px;
+    border: solid;
+    border-radius: 4px;
+    margin: 10px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-color: black;
+}
+
+button {
+    width: 80px;
+    height: 45px;
+    border: solid;
+    color: white;
+    background-color: rgb(25, 187, 46);
+    border-radius: 4px;
+    margin: 10px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-color: black;
 }

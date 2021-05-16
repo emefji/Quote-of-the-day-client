@@ -4,12 +4,23 @@ import "./App.css";
 import Title from "./components/Title";
 import List from "./components/List";
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
-
+import { io } from "socket.io-client";
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link
+  } from "react-router-dom";
+import CommentsPage from "./components/CommentsPage";
+import socket from "./functions/socket_connection";
 function App() {
 
 	const [fingerprint, setFingerprint] = useState("")
 
 	useEffect(() => {
+
+		socket.emit("ping", "ping");
+		socket.emit("ping", "ping");
 
 		(async () => {
 			// We recommend to call `load` at application startup.
@@ -28,10 +39,19 @@ function App() {
 		}
 	}, [])
   	return (
-    	<div className="App">
-			<Title Title={"Quote of the day"} />
-			<List fingerprint={fingerprint}/>
-		</div>
+
+		<Router>
+			<Switch>
+				<Route path="/comments/:id" component={CommentsPage} />
+				
+				<Route path="/">
+					<div className="App">
+						<Title Title={"Quote of the day"} />
+						<List fingerprint={fingerprint}/>
+					</div>
+				</Route>
+			</Switch>
+		</Router>
   	);
 }
 

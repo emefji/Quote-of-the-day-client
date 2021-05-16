@@ -1,6 +1,7 @@
 import moment from 'moment'
 import React from 'react'
 import { useState } from 'react'
+import { Link, Redirect } from 'react-router-dom'
 import heart from "../assets/heart.svg"
 import message from "../assets/message.svg"
 import http from '../functions/httprequests'
@@ -84,23 +85,18 @@ export default function Quote(props: PropsForComponent) {
             <p className="createdAt">{moment(props.quoteDocument.createdAt).format("YY/MM/DD HH:mm")}</p>
             <button className="deleteButton" onClick={deleteQuote}>Delete</button>
             {commentsActive ?
-                <div className="comments">
-                    {
-
-                        props.quoteDocument.comments.map((comment) =>
-                            <div key={comment._id} className="commentContainer">
-                                <p className="commentText"> "{comment.comment}"</p>
-                                <p className="commentAText"> {comment.author}</p>
-                            </div>
-                        )
-                    }
-                    <CreateComments id={props.quoteDocument._id} createCommentLocally={props.createCommentLocally} />
-                </div>
+                <Redirect to={"/comments/" + props.quoteDocument._id} />
                 : null
             }
         </div>
     )
 }
+
+// eslint-disable-next-line no-lone-blocks
+{/* <div className="comments">
+    
+    <CreateComments id={props.quoteDocument._id} createCommentLocally={props.createCommentLocally} />
+</div> */}
 
 interface PropsForComponent {
     createCommentLocally: (id: string, author: string, comment: string) => void

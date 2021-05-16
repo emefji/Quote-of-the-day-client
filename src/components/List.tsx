@@ -3,6 +3,7 @@ import moment from "moment"
 import http from '../functions/httprequests';
 import Quote from './Quote'
 import NewQuote from "./NewQuote"
+import './List.css';
 
 export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
 
@@ -96,24 +97,26 @@ export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
 
 
             <NewQuote updateLocally={createQuoteLocally} />
-            {
-                quotes.map((currentQuote) => <Quote 
-                    key={currentQuote._id}
-                    createCommentLocally={createCommentLocally}
-                    locallyChangeQuote={likeLocally}
-                    deleteQuoteLocally={deleteQuoteLocally}
-                    fingerprint={props.fingerprint}
-                    quoteDocument={{
-                        _id: currentQuote._id,
-                        author: currentQuote.author,
-                        quote: currentQuote.quote,
-                        comments: currentQuote.comments,
-                        likes: currentQuote.likes,
-                        createdAt: moment(currentQuote.createdAt).toDate(),
-                        updatedAt: moment(currentQuote.updatedAt).toDate()
-                    }}
-                />)
-            }
+            <div className="list-container">
+                {
+                    quotes.map((currentQuote) => <Quote 
+                        key={currentQuote._id}
+                        createCommentLocally={createCommentLocally}
+                        locallyChangeQuote={likeLocally}
+                        deleteQuoteLocally={deleteQuoteLocally}
+                        fingerprint={props.fingerprint}
+                        quoteDocument={{
+                            _id: currentQuote._id,
+                            author: currentQuote.author,
+                            quote: currentQuote.quote,
+                            comments: currentQuote.comments,
+                            likes: currentQuote.likes,
+                            createdAt: moment(currentQuote.createdAt).toDate(),
+                            updatedAt: moment(currentQuote.updatedAt).toDate()
+                        }}
+                    />)
+                }
+            </div>
            {/*  {<Quote 
                 quoteDocument={{
                     _id: "",
