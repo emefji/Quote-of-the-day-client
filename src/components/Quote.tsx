@@ -5,6 +5,7 @@ import { Link, Redirect } from 'react-router-dom'
 import heart from "../assets/heart.svg"
 import message from "../assets/message.svg"
 import http from '../functions/httprequests'
+import socket from '../functions/socket_connection'
 import CreateComments from './CreateComments'
 
 import "./Quote.css"
@@ -30,6 +31,12 @@ export default function Quote(props: PropsForComponent) {
         }
 
         setIsLiked(shouldLike)
+
+        socket.emit("like", {
+            id: props.quoteDocument._id,
+            like: shouldLike,
+            fingerprint: props.fingerprint
+        })
 
         await http({
             url: "/quote/like",
@@ -60,6 +67,7 @@ export default function Quote(props: PropsForComponent) {
                 }
             })
             props.deleteQuoteLocally(props.quoteDocument._id)
+            socket.emit("deleteQuote", props.quoteDocument._id);
         }
 
         else {

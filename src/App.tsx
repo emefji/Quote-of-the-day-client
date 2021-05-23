@@ -19,8 +19,7 @@ function App() {
 
 	useEffect(() => {
 
-		socket.emit("ping", "ping");
-		socket.emit("ping", "ping");
+		socket.emit("ping", "");
 
 		(async () => {
 			// We recommend to call `load` at application startup.

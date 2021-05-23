@@ -4,6 +4,7 @@ import http from '../functions/httprequests';
 import Quote from './Quote'
 import NewQuote from "./NewQuote"
 import './List.css';
+import socket from '../functions/socket_connection';
 
 export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
 
@@ -73,6 +74,50 @@ export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
 
         setQuotes(JSON.parse(JSON.stringify(quotes)))   
     }
+
+    useEffect(() => {
+        
+        socket.on("like", (data: {
+            id: string,
+            like: boolean,
+            fingerprint: string
+        }) => {
+
+            // Hitta rätt quote
+            const quote = quotes.find(current => current._id.toString() === data.id)
+            if (quote === undefined) {
+                return;
+            }
+
+            const likeFingerprintIndex = quote.likes.findIndex(fingerprint => fingerprint === data.fingerprint)
+            if (likeFingerprintIndex === -1) {
+                //skapa like
+                quote.likes.push(data.fingerprint)
+            } 
+            else {
+                quote.likes.splice(likeFingerprintIndex)
+            }
+
+            setQuotes(JSON.parse(JSON.stringify(quotes)));
+
+            //ta bort like
+        })
+
+        socket.on("deleteQuote", (id: string) => {
+            const quoteIndex = quotes.findIndex(current => current._id.toString() === id)
+            if (quoteIndex === -1) {
+                return;
+            }
+
+            quotes.splice(quoteIndex)
+
+            setQuotes(JSON.parse(JSON.stringify(quotes)));
+        })
+
+        return () => {
+            
+        }
+    }, [quotes])
 
     useEffect(() => {
         async function getQuotes() {
