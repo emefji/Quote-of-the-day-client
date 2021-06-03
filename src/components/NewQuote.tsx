@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import http from '../functions/httprequests'
+import socket from '../functions/socket_connection'
 
 export default function NewQuote(props: PropsForComponent) {
    const [quoteTitle, setquoteTitle] = useState("")
@@ -8,6 +9,12 @@ export default function NewQuote(props: PropsForComponent) {
     async function createQuote() {
         let quote = quoteTitle
         let author = authorTitle
+
+        if (quoteTitle.length <= 0 || authorTitle.length <= 0) {
+           alert("Du måste fylla i author och quote")
+           return
+        }
+
         
         const response = await http({
             url: "/quote",
@@ -16,6 +23,12 @@ export default function NewQuote(props: PropsForComponent) {
                 author: author,
                 quote: quote
             }
+        })
+        
+        socket.emit("createQuote", {
+            id: response.quote.id,
+            author: authorTitle,
+            quote: quoteTitle
         })
 
         props.updateLocally(

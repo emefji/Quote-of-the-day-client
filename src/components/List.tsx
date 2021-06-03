@@ -5,6 +5,8 @@ import Quote from './Quote'
 import NewQuote from "./NewQuote"
 import './List.css';
 import socket from '../functions/socket_connection';
+import { idText } from 'typescript';
+import { stringify } from 'querystring';
 
 export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
 
@@ -101,6 +103,51 @@ export default function List(props: DettaBehöverInteHeta_PropsForComponent) {
             setQuotes(JSON.parse(JSON.stringify(quotes)));
 
             //ta bort like
+        })
+
+        socket.on("createQuote", (data: {
+            id: string,
+            quote: string,
+            author: string
+        }) => {
+
+            quotes.push({
+                _id: data.id,
+                author: data.author,
+                comments: [],
+                createdAt: new Date(),
+                likes: [],
+                quote: data.quote,
+                updatedAt: new Date()
+            })
+
+            console.log("tjenixen ", data.quote     )
+            setQuotes(JSON.parse(JSON.stringify(quotes)));
+        })
+
+        socket.on("createcomment", (data: {
+            id: string,
+            comment: string,
+            author: string
+        }) => {
+            // Hitta rätt quote
+            const quote = quotes.find(current => current._id === data.id)
+            // OM quote inte finns  hallå?????? du försvann
+
+            if (quote === undefined) {
+                return
+            }
+
+            // Pusha comment i quoten
+            quote.comments.push({
+                _id: Math.random().toString(),
+                author: data.author,
+                comment: data.comment,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            })
+
+            setQuotes(JSON.parse(JSON.stringify(quotes)));
         })
 
         socket.on("deleteQuote", (id: string) => {

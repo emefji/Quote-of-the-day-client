@@ -2,6 +2,7 @@ import { Interface } from 'node:readline'
 import React, { Props, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import http from '../functions/httprequests'
+import socket from '../functions/socket_connection';
 import './CommentsPage.css';
 import CreateComments from "./CreateComments"
 
@@ -21,6 +22,29 @@ export default function CommentsPage(props: PropsForComponent) {
             setquoteDocument(response as unknown as IQuote);
         })
     }, [props.match.params.id])
+
+    useEffect(() => {
+        socket.on("createcomment", (data: {
+            id: string,
+            comment: string,
+            author: string
+        }) => {
+            if (quoteDocument === undefined)
+                return
+
+            // Pusha comment i quoten
+            quoteDocument.comments.push({
+                _id: Math.random().toString(),
+                author: data.author,
+                comment: data.comment,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            })
+
+            setquoteDocument(JSON.parse(JSON.stringify(quoteDocument)));
+        })
+        
+    })
 
     function updateLocally(id: string, author: string, comment: string) {
         console.log(id, author, comment)

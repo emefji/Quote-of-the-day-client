@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import http from '../functions/httprequests';
+import socket from '../functions/socket_connection';
 
 export default function CreateComments(props: PropsForComponent) {
 
@@ -23,6 +24,12 @@ export default function CreateComments(props: PropsForComponent) {
                 comment: comment,
                 id: props.id
             }
+        })
+
+        socket.emit("createcomment", {
+            id: props.id,
+            comment: comment,
+            author: author
         })
 
         props.createCommentLocally(props.id, author, comment)
