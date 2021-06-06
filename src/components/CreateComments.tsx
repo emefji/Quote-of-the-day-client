@@ -16,6 +16,11 @@ export default function CreateComments(props: PropsForComponent) {
             return;
         }
 
+        if (author.length > 20 || comment.length > 20) {
+            alert("To many characters")
+            return;
+        }
+
         const response = await http({
             url: "/quote/comment",
             method: "POST",
